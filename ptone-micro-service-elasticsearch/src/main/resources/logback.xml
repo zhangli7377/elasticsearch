@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration  scan="true" scanPeriod="60 seconds" debug="false">
+
+    <!-- 引入application.properties所定义的变量，这样之后可以通过 ${logger.name}来引用定义的 logger.name 变量 -->
+    <property resource="application.properties"></property>
+
+    <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>[${logger.name}] %d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{20} - %msg%n
+            </pattern>
+        </layout>
+    </appender>
+
+    <appender name="FILE"
+        class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${logging.path}/${logger.name}.%d{yyyy-MM-dd}</FileNamePattern>
+            <MaxHistory>30</MaxHistory>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>[${logger.name}] %d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{20} - %msg%n
+            </pattern>
+        </layout>
+    </appender>
+
+
+	<root level="INFO">
+        <appender-ref ref="Console" additivity="false"/>
+        <appender-ref ref="FILE" additivity="false"/>
+	</root>
+</configuration>  
